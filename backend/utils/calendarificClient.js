@@ -87,7 +87,7 @@
 import axios from 'axios';
 
 // Only read the API key at runtime; do NOT throw here.
-const API_KEY = process.env.CALENDARIFIC_API_KEY || "";
+const API_KEY = process.env.CALENDARIFIC_API_KEY || "Fnd3dCsYqf9CeYFipRu71qzoEA3BVoWL";
 
 const DEFAULT_COUNTRY = "IN";
 

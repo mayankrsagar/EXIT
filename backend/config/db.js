@@ -38,15 +38,16 @@
 import mongoose from 'mongoose';
 
 const connectDB = async () => {
-  const uri = process.env.MONGO_URI;
+  const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://mayankrsagar:exit@exit.cswni6d.mongodb.net/EXIT?retryWrites=true&w=majority&appName=EXIT';
 
-  if (!uri) {
+
+  if (!MONGO_URI) {
     console.warn("⚠️ MONGO_URI not set in environment. Skipping MongoDB connection.");
     return; // Allow app to continue (for Crio test cases)
   }
 
   try {
-    const conn = await mongoose.connect(uri);
+    const conn = await mongoose.connect(MONGO_URI);
     console.log(`✅ MongoDB connected: ${conn.connection.host}`);
   } catch (err) {
     console.error(`❌ MongoDB connection error: ${err.message}`);
