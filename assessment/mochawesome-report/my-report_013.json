@@ -1,0 +1,271 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 8,
+    "passes": 0,
+    "pending": 0,
+    "failures": 8,
+    "start": "2025-05-31T19:25:34.148Z",
+    "end": "2025-05-31T19:25:41.324Z",
+    "duration": 7176,
+    "testsRegistered": 8,
+    "passPercent": 0,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "81db543f-cec4-4db6-8fd2-0416d07bd6ff",
+      "title": "",
+      "fullFile": "cypress\\integration\\backend\\backendTests.spec.js",
+      "file": "cypress\\integration\\backend\\backendTests.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "a3b48fb0-480d-4d8a-abe0-f1edab7937f6",
+          "title": "Backend API Tests for Employee and Admin Role",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should register a new employee",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should register a new employee",
+              "timedOut": null,
+              "duration": 852,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: `${baseUrl}/api/auth/register`,\n  body: {\n    username: employeeUsername,\n    password: 'password123'\n  },\n  timeout: 30000 // Increase timeout for local testing\n}).then(response => {\n  expect(response.status).to.eq(201);\n  expect(response.body).to.have.property('message', 'User registered successfully');\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/auth/register\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:5000/api/auth/register\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/auth/register\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:5000/api/auth/register\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:132904:70)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:4226:37)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at Promise._settlePromiseFromHandler (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1542:31)\n    at Promise._settlePromise (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1599:18)\n    at Promise._settlePromise0 (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1644:10)\n    at Promise._settlePromises (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1720:18)\n    at _drainQueueStep (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2430:12)\n    at _drainQueue (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2423:9)\n    at Async._drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2439:5)\n    at Async.drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2309:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:217:7)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:5000\n      at new r (<embedded>:227:405020)\n      at ee.callback (<embedded>:227:411021)\n      at e.callback.s.callback [as _callback] (<embedded>:227:410467)\n      at s._callback.s.callback.s.callback (<embedded>:290:100275)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:290:109217)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "70d3dadc-9e45-4c97-820f-8c000a41e343",
+              "parentUUID": "a3b48fb0-480d-4d8a-abe0-f1edab7937f6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should login the employee with valid credentials",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should login the employee with valid credentials",
+              "timedOut": null,
+              "duration": 725,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: `${baseUrl}/api/auth/login`,\n  body: {\n    username: employeeUsername,\n    password: 'password123'\n  }\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property('token');\n  employeeToken = response.body.token;\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/auth/login\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:5000/api/auth/login\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/auth/login\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:5000/api/auth/login\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:132904:70)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:4226:37)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at Promise._settlePromiseFromHandler (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1542:31)\n    at Promise._settlePromise (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1599:18)\n    at Promise._settlePromise0 (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1644:10)\n    at Promise._settlePromises (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1720:18)\n    at _drainQueueStep (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2430:12)\n    at _drainQueue (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2423:9)\n    at Async._drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2439:5)\n    at Async.drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2309:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:232:7)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:5000\n      at new r (<embedded>:227:405020)\n      at ee.callback (<embedded>:227:411021)\n      at e.callback.s.callback [as _callback] (<embedded>:227:410467)\n      at s._callback.s.callback.s.callback (<embedded>:290:100275)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:290:109217)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "cfe539ed-7e5a-4f99-8225-b1bc2dd3d813",
+              "parentUUID": "a3b48fb0-480d-4d8a-abe0-f1edab7937f6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should submit resignation for an employee",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should submit resignation for an employee",
+              "timedOut": null,
+              "duration": 708,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: `${baseUrl}/api/user/resign`,\n  headers: {\n    Authorization: employeeToken\n  },\n  body: {\n    intendedLastWorkingDay: \"2024-12-26\"\n  }\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body.data).to.have.property('resignation');\n  expect(response.body.data.resignation).to.have.property('_id');\n  resignationId = response.body.data.resignation._id;\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/user/resign\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:5000/api/user/resign\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/user/resign\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:5000/api/user/resign\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:132904:70)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:4226:37)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at Promise._settlePromiseFromHandler (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1542:31)\n    at Promise._settlePromise (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1599:18)\n    at Promise._settlePromise0 (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1644:10)\n    at Promise._settlePromises (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1720:18)\n    at _drainQueueStep (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2430:12)\n    at _drainQueue (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2423:9)\n    at Async._drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2439:5)\n    at Async.drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2309:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:247:7)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:5000\n      at new r (<embedded>:227:405020)\n      at ee.callback (<embedded>:227:411021)\n      at e.callback.s.callback [as _callback] (<embedded>:227:410467)\n      at s._callback.s.callback.s.callback (<embedded>:290:100275)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:290:109217)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "24ae4fa4-12f3-4c8e-a351-30f6287ed8db",
+              "parentUUID": "a3b48fb0-480d-4d8a-abe0-f1edab7937f6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should login as admin (HR)",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should login as admin (HR)",
+              "timedOut": null,
+              "duration": 752,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: `${baseUrl}/api/auth/login`,\n  body: {\n    username: 'admin',\n    password: 'admin'\n  }\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property('token');\n  adminToken = response.body.token;\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/auth/login\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:5000/api/auth/login\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/auth/login\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:5000/api/auth/login\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:132904:70)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:4226:37)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at Promise._settlePromiseFromHandler (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1542:31)\n    at Promise._settlePromise (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1599:18)\n    at Promise._settlePromise0 (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1644:10)\n    at Promise._settlePromises (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1720:18)\n    at _drainQueueStep (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2430:12)\n    at _drainQueue (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2423:9)\n    at Async._drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2439:5)\n    at Async.drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2309:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:265:7)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:5000\n      at new r (<embedded>:227:405020)\n      at ee.callback (<embedded>:227:411021)\n      at e.callback.s.callback [as _callback] (<embedded>:227:410467)\n      at s._callback.s.callback.s.callback (<embedded>:290:100275)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:290:109217)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "2170fba3-1c0c-4cfa-ae8d-159e6f1f7b95",
+              "parentUUID": "a3b48fb0-480d-4d8a-abe0-f1edab7937f6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should view all resignations submitted by employees as admin",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should view all resignations submitted by employees as admin",
+              "timedOut": null,
+              "duration": 749,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'GET',\n  url: `${baseUrl}/api/admin/resignations`,\n  headers: {\n    Authorization: adminToken\n  }\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body.data).to.be.an('array');\n  // Verify our test resignation is in the list\n  const testResignation = response.body.data.find(r => r._id === resignationId);\n  expect(testResignation).to.exist;\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/admin/resignations\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:5000/api/admin/resignations\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/admin/resignations\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:5000/api/admin/resignations\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:132904:70)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:4226:37)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at Promise._settlePromiseFromHandler (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1542:31)\n    at Promise._settlePromise (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1599:18)\n    at Promise._settlePromise0 (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1644:10)\n    at Promise._settlePromises (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1720:18)\n    at _drainQueueStep (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2430:12)\n    at _drainQueue (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2423:9)\n    at Async._drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2439:5)\n    at Async.drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2309:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:280:7)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:5000\n      at new r (<embedded>:227:405020)\n      at ee.callback (<embedded>:227:411021)\n      at e.callback.s.callback [as _callback] (<embedded>:227:410467)\n      at s._callback.s.callback.s.callback (<embedded>:290:100275)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:290:109217)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "ea8e509b-4702-4fed-b737-c45dd115609a",
+              "parentUUID": "a3b48fb0-480d-4d8a-abe0-f1edab7937f6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should approve the employee’s resignation as admin",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should approve the employee’s resignation as admin",
+              "timedOut": null,
+              "duration": 885,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'PUT',\n  url: `${baseUrl}/api/admin/conclude_resignation`,\n  headers: {\n    Authorization: adminToken\n  },\n  body: {\n    resignationId: resignationId,\n    approved: true,\n    lwd: \"26 Dec 2024\"\n  }\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body.data).to.have.property('status', 'Approved');\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/admin/conclude_resignation\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: PUT\nURL: http://localhost:5000/api/admin/conclude_resignation\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/admin/conclude_resignation\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: PUT\nURL: http://localhost:5000/api/admin/conclude_resignation\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:132904:70)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:4226:37)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at Promise._settlePromiseFromHandler (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1542:31)\n    at Promise._settlePromise (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1599:18)\n    at Promise._settlePromise0 (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1644:10)\n    at Promise._settlePromises (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1720:18)\n    at _drainQueueStep (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2430:12)\n    at _drainQueue (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2423:9)\n    at Async._drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2439:5)\n    at Async.drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2309:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:299:7)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:5000\n      at new r (<embedded>:227:405020)\n      at ee.callback (<embedded>:227:411021)\n      at e.callback.s.callback [as _callback] (<embedded>:227:410467)\n      at s._callback.s.callback.s.callback (<embedded>:290:100275)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:290:109217)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "1fc9b630-dd84-49fa-aee0-cc0920ede73a",
+              "parentUUID": "a3b48fb0-480d-4d8a-abe0-f1edab7937f6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should allow the employee to submit responses to exit questionnaire",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should allow the employee to submit responses to exit questionnaire",
+              "timedOut": null,
+              "duration": 944,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'POST',\n  url: `${baseUrl}/api/user/responses`,\n  headers: {\n    Authorization: employeeToken\n  },\n  body: {\n    responses: [{\n      questionText: \"What prompted you to start looking for another job?\",\n      response: \"Lack of career growth opportunities\"\n    }, {\n      questionText: \"Would you recommend this company to others?\",\n      response: \"Yes, with some reservations\"\n    }]\n  }\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property('message', 'Exit interview submitted');\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/user/responses\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:5000/api/user/responses\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/user/responses\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: http://localhost:5000/api/user/responses\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:132904:70)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:4226:37)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at Promise._settlePromiseFromHandler (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1542:31)\n    at Promise._settlePromise (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1599:18)\n    at Promise._settlePromise0 (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1644:10)\n    at Promise._settlePromises (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1720:18)\n    at _drainQueueStep (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2430:12)\n    at _drainQueue (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2423:9)\n    at Async._drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2439:5)\n    at Async.drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2309:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:317:7)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:5000\n      at new r (<embedded>:227:405020)\n      at ee.callback (<embedded>:227:411021)\n      at e.callback.s.callback [as _callback] (<embedded>:227:410467)\n      at s._callback.s.callback.s.callback (<embedded>:290:100275)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:290:109217)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "17e90817-5203-4c72-8490-ccada5595ea7",
+              "parentUUID": "a3b48fb0-480d-4d8a-abe0-f1edab7937f6",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should allow the admin to view all questionnaire responses",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should allow the admin to view all questionnaire responses",
+              "timedOut": null,
+              "duration": 927,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: 'GET',\n  url: `${baseUrl}/api/admin/exit_responses`,\n  headers: {\n    Authorization: adminToken\n  }\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body.data).to.be.an('array');\n  expect(response.body.data[0]).to.have.property('employeeId');\n  expect(response.body.data[0]).to.have.property('responses').that.is.an('array');\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/admin/exit_responses\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:5000/api/admin/exit_responses\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed trying to load:\n\nhttp://localhost:5000/api/admin/exit_responses\n\nWe attempted to make an http request to this URL but the request failed without a response.\n\nWe received this error at the network level:\n\n  > Error: connect ECONNREFUSED 127.0.0.1:5000\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: GET\nURL: http://localhost:5000/api/admin/exit_responses\n\n-----------------------------------------------------------\n\nCommon situations why this would fail:\n  - you don't have internet access\n  - you forgot to run / boot your web server\n  - your web server isn't accessible\n  - you have weird network configuration settings on your computer\n\nhttps://on.cypress.io/request\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:132904:70)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at <unknown> (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:4226:37)\n    at tryCatcher (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1830:23)\n    at Promise._settlePromiseFromHandler (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1542:31)\n    at Promise._settlePromise (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1599:18)\n    at Promise._settlePromise0 (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1644:10)\n    at Promise._settlePromises (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:1720:18)\n    at _drainQueueStep (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2430:12)\n    at _drainQueue (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2423:9)\n    at Async._drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2439:5)\n    at Async.drainQueues (https://exit-kxgu.onrender.com/__cypress/runner/cypress_runner.js:2309:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:342:7)\n\nFrom Node.js Internals:\n  RequestError: Error: connect ECONNREFUSED 127.0.0.1:5000\n      at new r (<embedded>:227:405020)\n      at ee.callback (<embedded>:227:411021)\n      at e.callback.s.callback [as _callback] (<embedded>:227:410467)\n      at s._callback.s.callback.s.callback (<embedded>:290:100275)\n      at ee.emit (node:events:514:28)\n      at ee.onRequestError (<embedded>:290:109217)\n      at ClientRequest.emit (node:events:526:35)\n      at Socket.socketErrorListener (node:_http_client:501:9)\n      at Socket.emit (node:events:514:28)\n      at emitErrorNT (node:internal/streams/destroy:151:8)\n      at emitErrorCloseNT (node:internal/streams/destroy:116:3)\n      at process.processTicksAndRejections (node:internal/process/task_queues:82:21)",
+                "diff": null
+              },
+              "uuid": "2ccc2b19-3d4f-4bea-b765-bea32a82bbbf",
+              "parentUUID": "a3b48fb0-480d-4d8a-abe0-f1edab7937f6",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [],
+          "failures": [
+            "70d3dadc-9e45-4c97-820f-8c000a41e343",
+            "cfe539ed-7e5a-4f99-8225-b1bc2dd3d813",
+            "24ae4fa4-12f3-4c8e-a351-30f6287ed8db",
+            "2170fba3-1c0c-4cfa-ae8d-159e6f1f7b95",
+            "ea8e509b-4702-4fed-b737-c45dd115609a",
+            "1fc9b630-dd84-49fa-aee0-cc0920ede73a",
+            "17e90817-5203-4c72-8490-ccada5595ea7",
+            "2ccc2b19-3d4f-4bea-b765-bea32a82bbbf"
+          ],
+          "pending": [],
+          "skipped": [],
+          "duration": 6542,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "my-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "json": true,
+        "reportsDir": "reports/your-reports-folder",
+        "reportFilename": "my-report",
+        "overwrite": false
+      },
+      "version": "6.2.0"
+    }
+  }
+}
