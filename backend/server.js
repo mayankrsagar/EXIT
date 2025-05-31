@@ -88,6 +88,10 @@ app.use((err, req, res, next) => {
   return res.status(status).json({ error: message });
 });
 
+app.get("/api/health", (req, res) => {
+  return res.status(200).json({ status: "ok" });
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
   console.log(

@@ -86,27 +86,15 @@
 
 import axios from 'axios';
 
-const API_KEY = process.env.CALENDARIFIC_API_KEY;
+// Only read the API key at runtime; do NOT throw here.
+const API_KEY = process.env.CALENDARIFIC_API_KEY || "";
+
 const DEFAULT_COUNTRY = "IN";
 
-// If the API key is not set, we simply warn and always return false (no holiday)
-if (!API_KEY) {
-  console.warn(
-    "CALENDARIFIC_API_KEY not set in environment. Skipping holiday checks."
-  );
-}
-
-/**
- * Checks whether the given date is a public holiday for the user's country.
- * If CALENDARIFIC_API_KEY is missing, this function will always return false.
- *
- * @param {Date} dateObj
- * @param {Object} user   Optional user object—if it has a `countryCode` field, that code will be used.
- * @returns {Promise<boolean>}  True if that date is a holiday; false otherwise.
- */
 export const isHoliday = async (dateObj, user) => {
-  // If the API key is missing, skip the entire call
+  // If no API key, skip all holiday checks:
   if (!API_KEY) {
+    console.log("CALENDARIFIC_API_KEY not set in environment. Skipping holiday checks.");
     return false;
   }
 
@@ -147,9 +135,7 @@ export const isHoliday = async (dateObj, user) => {
           `Calendarific API auth error (HTTP ${status}):`,
           JSON.stringify(data)
         );
-        throw new Error(
-          `Calendarific API authentication failed (HTTP ${status}).`
-        );
+        return false;
       }
 
       // 400 → invalid params (treat as no holiday)
