@@ -38,7 +38,7 @@
 import mongoose from 'mongoose';
 
 const connectDB = async () => {
-  const MONGO_URI = process.env.MONGO_URI || 'mongodb+srv://mayankrsagar:exit@exit.cswni6d.mongodb.net/EXIT?retryWrites=true&w=majority&appName=EXIT';
+  const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/test';
 
 
   if (!MONGO_URI) {
