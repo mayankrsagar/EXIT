@@ -1,4 +1,3 @@
-// src/app/employee/exit_interview/page.js
 "use client";
 
 import {
@@ -10,114 +9,77 @@ import { useRouter } from 'next/navigation';
 
 import { API_BASE_URL } from '@/config/apiUrl';
 
-export default function ExitInterviewPage() {
-  const [resignationId, setResignationId] = useState("");
-  const [responses, setResponses] = useState([
-    { questionText: "What motivated you to leave?", response: "" },
-    { questionText: "Any suggestions for improvement?", response: "" },
-  ]);
-  const [message, setMessage] = useState(null);
+export default function HRExitInterviewPage() {
+  const [interviews, setInterviews] = useState([]);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    // Ensure user is logged in and role is EMPLOYEE
     const token = localStorage.getItem("token");
     const role = localStorage.getItem("role");
-    if (!token || role !== "EMPLOYEE") {
+
+    if (!token) {
       router.push("/login");
+    } else if (role !== "HR") {
+      setErrorMsg("Access denied: Only HR can view this page.");
+      setLoading(false);
+    } else {
+      fetchInterviews(token);
     }
   }, [router]);
 
-  const handleChange = (idx, field, value) => {
-    const newResponses = [...responses];
-    newResponses[idx][field] = value;
-    setResponses(newResponses);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setErrorMsg(null);
-    setMessage(null);
-
+  const fetchInterviews = async (token) => {
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`${API_BASE_URL}user/responses`, {
-        method: "POST",
+      const res = await fetch(`${API_BASE_URL}admin/exit_interviews`, {
         headers: {
-          "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ resignationId, responses }),
       });
+
       const data = await res.json();
+
       if (!res.ok) {
-        setErrorMsg(data.error || data.message || "Submission failed");
+        setErrorMsg(data.error || "Failed to fetch exit interviews");
       } else {
-        setMessage("Exit interview submitted successfully!");
-        setResignationId("");
-        setResponses((prev) => prev.map((q) => ({ ...q, response: "" })));
+        setInterviews(data.exitInterviews || []);
       }
-    } catch (err) {
-      setErrorMsg("An unexpected error occurred");
-      console.error(err);
+    } catch (error) {
+      console.error(error);
+      setErrorMsg("Something went wrong.");
+    } finally {
+      setLoading(false);
     }
   };
 
+  if (loading) {
+    return <div className="text-center mt-10">Loading...</div>;
+  }
+
+  if (errorMsg) {
+    return <div className="text-center mt-10 text-red-600">{errorMsg}</div>;
+  }
+
   return (
-    <div className="max-w-lg mx-auto mt-12 bg-white p-8 rounded-lg shadow">
-      <h2 className="text-2xl font-semibold mb-6">Exit Interview</h2>
-      {message && (
-        <div className="bg-green-100 text-green-700 px-3 py-2 rounded mb-4">
-          {message}
-        </div>
-      )}
-      {errorMsg && (
-        <div className="bg-red-100 text-red-700 px-3 py-2 rounded mb-4">
-          {errorMsg}
-        </div>
-      )}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div>
-          <label htmlFor="resignationId" className="block text-sm font-medium">
-            Resignation ID
-          </label>
-          <input
-            id="resignationId"
-            type="text"
-            value={resignationId}
-            onChange={(e) => setResignationId(e.target.value)}
-            required
-            placeholder="e.g. 64a1b2c3d4e5f6a7b8c9d0e"
-            className="mt-1 w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-          />
-          <p className="text-sm text-gray-500 mt-1">
-            Enter the resignation ID given to you upon approval.
-          </p>
-        </div>
-
-        {responses.map((item, idx) => (
-          <div key={idx}>
-            <label className="block text-sm font-medium">
-              {item.questionText}
-            </label>
-            <textarea
-              rows="3"
-              value={item.response}
-              onChange={(e) => handleChange(idx, "response", e.target.value)}
-              required
-              className="mt-1 w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
-            />
+    <div className="max-w-4xl mx-auto mt-12 p-6 bg-white rounded shadow">
+      <h2 className="text-2xl font-semibold mb-6">All Exit Interviews</h2>
+      {interviews.length === 0 ? (
+        <p>No interviews submitted yet.</p>
+      ) : (
+        interviews.map((interview, index) => (
+          <div key={index} className="border-b border-gray-300 mb-4 pb-4">
+            <p className="text-sm text-gray-600 mb-2">
+              <strong>Resignation ID:</strong> {interview.resignationId}
+            </p>
+            {interview.responses.map((response, idx) => (
+              <div key={idx} className="mb-2">
+                <p className="font-medium">{response.questionText}</p>
+                <p className="text-gray-700">{response.response}</p>
+              </div>
+            ))}
           </div>
-        ))}
-
-        <button
-          type="submit"
-          className="w-full mt-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700"
-        >
-          Submit Exit Interview
-        </button>
-      </form>
+        ))
+      )}
     </div>
   );
 }
