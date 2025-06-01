@@ -83,7 +83,7 @@ it("should submit resignation for an employee", () => {
     },
     failOnStatusCode: false,
   }).then((response) => {
-    // ← change this line from 200 → 201
+    
     logIfBadStatus(response, 201);
     expect(response.status).to.eq(201);
 
