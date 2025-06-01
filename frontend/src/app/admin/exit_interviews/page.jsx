@@ -31,7 +31,7 @@ export default function HRExitInterviewPage() {
 
   const fetchInterviews = async (token) => {
     try {
-      const res = await fetch(`${API_BASE_URL}admin/exit_interviews`, {
+      const res = await fetch(`${API_BASE_URL}admin/exit_responses`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
