@@ -61,6 +61,11 @@ const resignationSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    reason: {
+      type: String,
+      maxlength: 1000,
+      required: true,
+    },
     status: {
       type: String,
       enum: ['Pending', 'Approved', 'Rejected'],
@@ -77,6 +82,7 @@ const resignationSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+
 
 const Resignation =
   mongoose.models.Resignation ||

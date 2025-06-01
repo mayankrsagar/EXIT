@@ -41,7 +41,7 @@ export const submitResignation = asyncHandler(async (req, res) => {
 // @access  Private (hrOnly)
 export const getAllResignations = asyncHandler(async (req, res) => {
   const resignations = await Resignation.find({})
-    .populate("user", "username email role")
+    .populate("employee", "username email role")
     .sort({ createdAt: -1 });
 
   return res.status(200).json({
@@ -74,23 +74,41 @@ export const concludeResignation = asyncHandler(async (req, res) => {
   resignation.decidedAt = new Date();
 
   const updated = await resignation.save();
-  return res.status(200).json({
-    data: {
-      _id: updated._id,
-      employee: {
-        _id: updated.user,
-        username: updated.employeeUsername,
-        email: updated.employeeEmail,
-      },
-      intendedLastWorkingDay: updated.intendedLastWorkingDay,
-      status: updated.status,
-      exitDate: updated.exitDate,
-      decidedAt: updated.decidedAt,
-      submittedAt: updated.submittedAt,
-      createdAt: updated.createdAt,
-      updatedAt: updated.updatedAt,
-      __v: updated.__v,
-    },
-  });
+ return res.status(200).json({
+  data: {
+    _id: updated._id,
+    employee: updated.employee, // just the ObjectId
+    intendedLastWorkingDay: updated.intendedLastWorkingDay,
+    status: updated.status,
+    exitDate: updated.exitDate,
+    decidedAt: updated.decidedAt,
+    submittedAt: updated.submittedAt,
+    createdAt: updated.createdAt,
+    updatedAt: updated.updatedAt,
+    __v: updated.__v,
+  },
+});
+ // or 
+
+// return res.status(200).json({
+//   data: {
+//     _id: updated._id,
+//     employee: {
+//       _id: updated.employee._id,
+//       username: updated.employee.username,
+//       email: updated.employee.email,
+//     },
+//     intendedLastWorkingDay: updated.intendedLastWorkingDay,
+//     status: updated.status,
+//     exitDate: updated.exitDate,
+//     decidedAt: updated.decidedAt,
+//     submittedAt: updated.submittedAt,
+//     createdAt: updated.createdAt,
+//     updatedAt: updated.updatedAt,
+//     __v: updated.__v,
+//   },
+// });
+
+
 });
 
