@@ -1,36 +1,43 @@
 import * as exitInterviewService from '../services/exitInterviewService.js';
-import {
-  submitExitInterviewSchema,
-} from '../validators/exitInterviewValidators.js';
 
-export const submitExitInterview = async (req, res, next) => {
-  try {
-    const { error, value } = submitExitInterviewSchema.validate(req.body, {
-      abortEarly: false,
-      stripUnknown: true,
-    });
-    if (error) return res.status(400).json({ errors: error.details.map(d => d.message) });
+it("should allow the employee to submit responses to exit questionnaire", () => {
+  const token = Cypress.env("employeeAuthToken");
+  const resignationId = Cypress.env("employeeResignationId");
 
-    const { resignationId, responses } = value;
-
-    if (req.user.role !== 'EMPLOYEE') {
-      return res.status(403).json({ error: 'Only employees can submit exit interviews' });
-    }
-
-    const newExitInterview = await exitInterviewService.submitExitInterview({
+  cy.request({
+    method: "POST",
+    url: `${apiUrl}/user/responses`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: {
       resignationId,
-      employeeId: req.user.id,
-      responses,
-    });
+      responses: [
+        {
+          questionText: "What prompted you to start looking for another job?",
+          response: "Lack of career growth opportunities",
+        },
+        {
+          questionText: "Would you recommend this company to others?",
+          response: "Yes, with some reservations",
+        },
+      ],
+    },
+    failOnStatusCode: false,
+  }).then((response) => {
+    expect(response.status).to.eq(201);
+    expect(response.body).to.have.property("message", "Exit interview submitted");
 
-    return res.status(201).json({ 
-      message: "Exit interview submitted", 
-      data: newExitInterview  // Include the saved document here!
-    });
-  } catch (err) {
-    next(err);
-  }
-};
+    // Optional: only test data if it's present
+    if (response.body.data) {
+      const { data } = response.body;
+      expect(data).to.have.property("resignation", resignationId);
+      expect(data).to.have.property("employee");
+      expect(data.responses).to.be.an("array").and.have.length(2);
+    }
+  });
+});
 
 
 export const getAllExitInterviews = async (req, res, next) => {
