@@ -16,8 +16,6 @@ export default function ExitInterviewPage() {
     { questionText: "What motivated you to leave?", response: "" },
     { questionText: "Any suggestions for improvement?", response: "" },
   ]);
-  const [message, setMessage] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -37,49 +35,63 @@ export default function ExitInterviewPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setErrorMsg(null);
-    setMessage(null);
 
-    try {
-      const token = localStorage.getItem("token");
-      const res = await fetch(`${API_BASE_URL}user/responses`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify({ resignationId, responses }),
-      });
-      const data = await res.json();
-      if (!res.ok) {
-        setErrorMsg(data.error || data.message || "Submission failed");
-      } else {
-        setMessage("Exit interview submitted successfully!");
-        setResignationId("");
-        setResponses((prev) => prev.map((q) => ({ ...q, response: "" })));
-      }
-    } catch (err) {
-      setErrorMsg("An unexpected error occurred");
-      console.error(err);
-    }
+   try {
+  const token = localStorage.getItem("token");
+  const res = await fetch(`${API_BASE_URL}user/responses`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ resignationId, responses }),
+  });
+
+  const data = await res.json();
+
+  if (!res.ok) {
+    toast.error(data.error || data.message || "Submission failed", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+  } else {
+    toast.success("Exit interview submitted successfully!", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
+
+    setResignationId("");
+    setResponses((prev) =>
+      prev.map((q) => ({ ...q, response: "" }))
+    );
+  }
+} catch (err) {
+  toast.error("An unexpected error occurred", {
+    position: "top-right",
+    autoClose: 3000,
+  });
+  console.error(err);
+}
+
   };
 
   return (
     <div className="max-w-lg mx-auto mt-12 bg-white p-8 rounded-lg shadow">
       <h2 className="text-2xl font-semibold mb-6">Exit Interview</h2>
-      {message && (
-        <div className="bg-green-100 text-green-700 px-3 py-2 rounded mb-4">
-          {message}
-        </div>
-      )}
-      {errorMsg && (
-        <div className="bg-red-100 text-red-700 px-3 py-2 rounded mb-4">
-          {errorMsg}
-        </div>
-      )}
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label htmlFor="resignationId" className="block text-sm font-medium">
+          <label
+            htmlFor="resignationId"
+            className="block text-sm font-medium"
+          >
             Resignation ID
           </label>
           <input
@@ -104,7 +116,9 @@ export default function ExitInterviewPage() {
             <textarea
               rows="3"
               value={item.response}
-              onChange={(e) => handleChange(idx, "response", e.target.value)}
+              onChange={(e) =>
+                handleChange(idx, "response", e.target.value)
+              }
               required
               className="mt-1 w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />

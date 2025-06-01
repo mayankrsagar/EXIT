@@ -2,113 +2,105 @@
 
 import asyncHandler from 'express-async-handler';
 
-import Resignation from '../models/Resignation.js';
-import User from '../models/User.js';
+import * as resignationService from '../services/resignationService.js';
 
-// @desc    Employee submits their resignation
-// @route   POST /api/user/resign
-// @access  Private (employee)
+/**
+ * @desc    Employee submits their resignation
+ * @route   POST /api/user/resign
+ * @access  Private (EMPLOYEE)
+ */
 export const submitResignation = asyncHandler(async (req, res) => {
   const { intendedLastWorkingDay, reason } = req.body;
 
+  // 1) Basic payload validation
   if (!intendedLastWorkingDay || !reason) {
     res.status(400);
-    throw new Error("intendedLastWorkingDay and reason are required");
+    throw new Error("`intendedLastWorkingDay` and `reason` are required");
   }
 
-  const userId = req.user.id;
-  const user = await User.findById(userId);
-  if (!user) {
-    res.status(404);
-    throw new Error("User not found");
-  }
+  // 2) Extract employeeId from authenticated user
+  const employeeId = req.user.id;
 
-  const resignation = await Resignation.create({
-    employee: userId, // ✅ matches schema
-    intendedLastWorkingDay: new Date(intendedLastWorkingDay), // ✅ matches schema
-    reason, // ✅ optional but useful
-    status: "Pending", // or default in schema
+  // 3) Call service layer to do the heavy lifting
+  //    - the service will:
+  //       • check that the user exists
+  //       • parse & validate the date (weekday/holiday)
+  //       • create a new Resignation document
+  //       • (optionally) send an email to HR
+  const newResignation = await resignationService.submitResignation({
+    employeeId,
+    intendedLastWorkingDay,
+    reason
   });
 
+  // 4) Return 201 + the newly created resignation
   return res.status(201).json({
-    data: resignation,
-    message: "Resignation submitted successfully",
+    data: newResignation,
+    message: "Resignation submitted successfully"
   });
 });
 
-// @desc    Admin views all resignations
-// @route   GET /api/admin/resignations
-// @access  Private (hrOnly)
+/**
+ * @desc    Admin views all resignations
+ * @route   GET /api/admin/resignations
+ * @access  Private (HR only)
+ */
 export const getAllResignations = asyncHandler(async (req, res) => {
-  const resignations = await Resignation.find({})
-    .populate("employee", "username email role")
-    .sort({ createdAt: -1 });
+  // Simply forward to service; no filter ≔ {} by default
+  const resignations = await resignationService.getAllResignations();
 
   return res.status(200).json({
-    data: resignations,
+    data: resignations
   });
 });
 
-// @desc    Admin approves/declines a resignation
-// @route   PUT /api/admin/conclude_resignation
-// @access  Private (hrOnly)
-// controllers/resignationController.js
-
+/**
+ * @desc    Admin approves/declines a resignation
+ * @route   PUT /api/admin/conclude_resignation
+ * @access  Private (HR only)
+ */
 export const concludeResignation = asyncHandler(async (req, res) => {
-  const { resignationId, approved, intendedLastWorkingDay, exitDate } = req.body;
+  const { resignationId, approved, exitDate } = req.body;
 
-  if (!resignationId || typeof approved !== "boolean" || !intendedLastWorkingDay || !exitDate) {
-    res.status(400);
-    throw new Error("resignationId, approved (boolean), intendedLastWorkingDay and exitDate are all required");
-  }
+  // 1) Basic payload validation
+  if (!resignationId || typeof approved !== "boolean") {
+  res.status(400);
+  throw new Error("`resignationId` and `approved` are required");
+}
 
-  const resignation = await Resignation.findById(resignationId);
-  if (!resignation) {
-    res.status(404);
-    throw new Error("Resignation not found");
-  }
+if (approved && !exitDate) { // ✅ Only required when approving
+  res.status(400);
+  throw new Error("`exitDate` is required when approving");
+}
+  
 
-  resignation.status = approved ? "Approved" : "Declined";
-  resignation.intendedLastWorkingDay = new Date(intendedLastWorkingDay);
-  resignation.exitDate = new Date(exitDate);
-  resignation.decidedAt = new Date();
+  // 2) Delegate to service layer
+  //    - service will:
+  //       • look up the resignation
+  //       • ensure it's still pending
+  //       • validate exitDate against intendedLastWorkingDay
+  //       • (optionally) call Calendarific to check for holidays/weekends
+  //       • save the updated document
+  //       • (optionally) send an email to the employee
+  const updatedResignation = await resignationService.concludeResignation({
+    resignationId,
+    approved,
+    exitDate
+  });
 
-  const updated = await resignation.save();
- return res.status(200).json({
-  data: {
-    _id: updated._id,
-    employee: updated.employee, // just the ObjectId
-    intendedLastWorkingDay: updated.intendedLastWorkingDay,
-    status: updated.status,
-    exitDate: updated.exitDate,
-    decidedAt: updated.decidedAt,
-    submittedAt: updated.submittedAt,
-    createdAt: updated.createdAt,
-    updatedAt: updated.updatedAt,
-    __v: updated.__v,
-  },
+  // 3) Return 200 + the updated record
+  return res.status(200).json({
+    data: {
+      _id: updatedResignation._id,
+      employee: updatedResignation.employee,                    // ObjectId or populated sub‐object
+      intendedLastWorkingDay: updatedResignation.intendedLastWorkingDay,
+      status: updatedResignation.status,
+      exitDate: updatedResignation.exitDate,
+      decidedAt: updatedResignation.decidedAt,
+      submittedAt: updatedResignation.submittedAt,
+      createdAt: updatedResignation.createdAt,
+      updatedAt: updatedResignation.updatedAt,
+      __v: updatedResignation.__v
+    }
+  });
 });
- // or 
-
-// return res.status(200).json({
-//   data: {
-//     _id: updated._id,
-//     employee: {
-//       _id: updated.employee._id,
-//       username: updated.employee.username,
-//       email: updated.employee.email,
-//     },
-//     intendedLastWorkingDay: updated.intendedLastWorkingDay,
-//     status: updated.status,
-//     exitDate: updated.exitDate,
-//     decidedAt: updated.decidedAt,
-//     submittedAt: updated.submittedAt,
-//     createdAt: updated.createdAt,
-//     updatedAt: updated.updatedAt,
-//     __v: updated.__v,
-//   },
-// });
-
-
-});
-

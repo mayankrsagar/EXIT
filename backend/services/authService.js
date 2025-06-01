@@ -101,7 +101,6 @@ import jwt from 'jsonwebtoken';
 
 import User from '../models/User.js';
 
-const JWT_SECRET = process.env.JWT_SECRET;
 const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '7d';
 
 /**
@@ -168,11 +167,21 @@ export const loginUser = async ({ username, email, password }) => {
     throw err;
   }
 
+//undefined
+// console.log(process.env.JWT_SECRET)
+// this is the right way 
+  // console.log(`JWT_SECRET: ${process.env.JWT_SECRET}`)
+
+if (!`${process.env.JWT_SECRET}`) {
+  throw new Error("JWT_SECRET is missing. Ensure it's set in your environment variables.");
+}
+
+
   const payload = {
     id: user._id,
     role: user.role,
   };
-  const token = jwt.sign(payload, JWT_SECRET, {
+  const token = jwt.sign(payload, process.env.JWT_SECRET, {
     expiresIn: JWT_EXPIRES_IN,
   });
 

@@ -4,6 +4,7 @@ import {
   Geist,
   Geist_Mono,
 } from 'next/font/google';
+import { ToastContainer } from 'react-toastify';
 
 import LayoutWrapper from './layoutWrapper';
 
@@ -28,6 +29,7 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <ToastContainer />
         <LayoutWrapper>
 {children}
         </LayoutWrapper>
