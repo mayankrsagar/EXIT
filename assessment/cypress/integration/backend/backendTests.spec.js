@@ -1,6 +1,6 @@
 describe("Backend API Tests for Employee and Admin Role", () => {
-  // const apiUrl = "https://exit-kxgu.onrender.com/api";
-  const apiUrl="http://localhost:5000/api";
+  const apiUrl = "https://exit-kxgu.onrender.com/api";
+  // const apiUrl="http://localhost:5000/api";
   let employeeResignationId = null;
 
   // (1) Generate a unique alphanumeric username + email + ≥6‐char password

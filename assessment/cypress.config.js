@@ -6,7 +6,7 @@ export default defineConfig({
     setupNodeEvents(on, config) {
       // Node event listeners go here
     },
-    baseUrl: "http://localhost:5000",
+    baseUrl: "https://exit-kxgu.onrender.com",
     specPattern: "cypress/integration/**/*.spec.js",
     video: false, // disable video recording if not needed
   },
