@@ -1,0 +1,261 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 7,
+    "passes": 1,
+    "pending": 2,
+    "failures": 4,
+    "start": "2025-06-01T09:51:23.091Z",
+    "end": "2025-06-01T09:52:17.973Z",
+    "duration": 54882,
+    "testsRegistered": 8,
+    "passPercent": 16.666666666666664,
+    "pendingPercent": 25,
+    "other": 1,
+    "hasOther": true,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "4e2f0a9e-1f5e-4eea-a2e4-026435c565fc",
+      "title": "",
+      "fullFile": "cypress\\integration\\backend\\backendTests.spec.js",
+      "file": "cypress\\integration\\backend\\backendTests.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "4f0f4de7-a498-4210-a4bd-4ae3dc6c2778",
+          "title": "Backend API Tests for Employee and Admin Role",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should register a new employee",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should register a new employee",
+              "timedOut": null,
+              "duration": 30275,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request(\"POST\", `${apiUrl}/auth/register`, {\n  username: employeeUsername,\n  email: employeeEmail,\n  password: employeePassword\n}).then(response => {\n  expect(response.status).to.eq(201);\n  expect(response.body).to.have.property(\"message\", \"User registered successfully\");\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` timed out waiting `30000ms` for a response from your server.\n\nThe request we sent was:\n\nMethod: POST\nURL: https://exit-kxgu.onrender.com/api/auth/register\n\nNo response was received within the timeout.\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` timed out waiting `30000ms` for a response from your server.\n\nThe request we sent was:\n\nMethod: POST\nURL: https://exit-kxgu.onrender.com/api/auth/register\n\nNo response was received within the timeout.\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:5000/__cypress/runner/cypress_runner.js:132893:70)\n    at tryCatcher (http://localhost:5000/__cypress/runner/cypress_runner.js:1830:23)\n    at <unknown> (http://localhost:5000/__cypress/runner/cypress_runner.js:4209:41)\n    at tryCatcher (http://localhost:5000/__cypress/runner/cypress_runner.js:1830:23)\n    at Promise._settlePromiseFromHandler (http://localhost:5000/__cypress/runner/cypress_runner.js:1542:31)\n    at Promise._settlePromise (http://localhost:5000/__cypress/runner/cypress_runner.js:1599:18)\n    at Promise._settlePromise0 (http://localhost:5000/__cypress/runner/cypress_runner.js:1644:10)\n    at Promise._settlePromises (http://localhost:5000/__cypress/runner/cypress_runner.js:1720:18)\n    at _drainQueueStep (http://localhost:5000/__cypress/runner/cypress_runner.js:2430:12)\n    at _drainQueue (http://localhost:5000/__cypress/runner/cypress_runner.js:2423:9)\n    at Async._drainQueues (http://localhost:5000/__cypress/runner/cypress_runner.js:2439:5)\n    at Async.drainQueues (http://localhost:5000/__cypress/runner/cypress_runner.js:2309:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:15:7)",
+                "diff": null
+              },
+              "uuid": "767a9d9f-1cb6-4699-9c3b-feb03614e6bb",
+              "parentUUID": "4f0f4de7-a498-4210-a4bd-4ae3dc6c2778",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should login the employee with valid credentials",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should login the employee with valid credentials",
+              "timedOut": null,
+              "duration": 20288,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "cy.request(\"POST\", `${apiUrl}/auth/login`, {\n  email: employeeEmail,\n  password: employeePassword\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property(\"token\");\n  // Store the raw JWT for later\n  Cypress.env(\"employeeAuthToken\", response.body.token);\n});",
+              "err": {
+                "message": "CypressError: `cy.request()` failed on:\n\nhttps://exit-kxgu.onrender.com/api/auth/login\n\nThe response we received from your web server was:\n\n  > 401: Unauthorized\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: https://exit-kxgu.onrender.com/api/auth/login\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Cypress/13.17.0 Chrome/118.0.5993.159 Electron/27.3.10 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 61\n}\nBody: {\"email\":\"emp1748771483061@example.com\",\"password\":\"emp1234\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 401 - Unauthorized\nHeaders: {\n  \"date\": \"Sun, 01 Jun 2025 09:52:15 GMT\",\n  \"content-type\": \"application/json; charset=utf-8\",\n  \"transfer-encoding\": \"chunked\",\n  \"connection\": \"keep-alive\",\n  \"access-control-allow-origin\": \"*\",\n  \"etag\": \"W/\\\"1f-mRYQ6Yx/raK/ssDeWseqQCiH0yM\\\"\",\n  \"rndr-id\": \"25b9ef59-806f-45a4\",\n  \"vary\": \"Accept-Encoding\",\n  \"x-powered-by\": \"Express\",\n  \"x-render-origin-server\": \"Render\",\n  \"cf-cache-status\": \"DYNAMIC\",\n  \"server\": \"cloudflare\",\n  \"cf-ray\": \"948dd0b51ec23d54-BOM\",\n  \"alt-svc\": \"h3=\\\":443\\\"; ma=86400\"\n}\nBody: {\n  \"error\": \"Invalid credentials\"\n}\n\n\nhttps://on.cypress.io/request",
+                "estack": "CypressError: `cy.request()` failed on:\n\nhttps://exit-kxgu.onrender.com/api/auth/login\n\nThe response we received from your web server was:\n\n  > 401: Unauthorized\n\nThis was considered a failure because the status code was not `2xx` or `3xx`.\n\nIf you do not want status codes to cause failures pass the option: `failOnStatusCode: false`\n\n-----------------------------------------------------------\n\nThe request we sent was:\n\nMethod: POST\nURL: https://exit-kxgu.onrender.com/api/auth/login\nHeaders: {\n  \"Connection\": \"keep-alive\",\n  \"user-agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Cypress/13.17.0 Chrome/118.0.5993.159 Electron/27.3.10 Safari/537.36\",\n  \"accept\": \"*/*\",\n  \"accept-encoding\": \"gzip, deflate\",\n  \"content-type\": \"application/json\",\n  \"content-length\": 61\n}\nBody: {\"email\":\"emp1748771483061@example.com\",\"password\":\"emp1234\"}\n\n-----------------------------------------------------------\n\nThe response we got was:\n\nStatus: 401 - Unauthorized\nHeaders: {\n  \"date\": \"Sun, 01 Jun 2025 09:52:15 GMT\",\n  \"content-type\": \"application/json; charset=utf-8\",\n  \"transfer-encoding\": \"chunked\",\n  \"connection\": \"keep-alive\",\n  \"access-control-allow-origin\": \"*\",\n  \"etag\": \"W/\\\"1f-mRYQ6Yx/raK/ssDeWseqQCiH0yM\\\"\",\n  \"rndr-id\": \"25b9ef59-806f-45a4\",\n  \"vary\": \"Accept-Encoding\",\n  \"x-powered-by\": \"Express\",\n  \"x-render-origin-server\": \"Render\",\n  \"cf-cache-status\": \"DYNAMIC\",\n  \"server\": \"cloudflare\",\n  \"cf-ray\": \"948dd0b51ec23d54-BOM\",\n  \"alt-svc\": \"h3=\\\":443\\\"; ma=86400\"\n}\nBody: {\n  \"error\": \"Invalid credentials\"\n}\n\n\nhttps://on.cypress.io/request\n    at <unknown> (http://localhost:5000/__cypress/runner/cypress_runner.js:132876:72)\n    at tryCatcher (http://localhost:5000/__cypress/runner/cypress_runner.js:1830:23)\n    at Promise._settlePromiseFromHandler (http://localhost:5000/__cypress/runner/cypress_runner.js:1542:31)\n    at Promise._settlePromise (http://localhost:5000/__cypress/runner/cypress_runner.js:1599:18)\n    at Promise._settlePromise0 (http://localhost:5000/__cypress/runner/cypress_runner.js:1644:10)\n    at Promise._settlePromises (http://localhost:5000/__cypress/runner/cypress_runner.js:1724:18)\n    at _drainQueueStep (http://localhost:5000/__cypress/runner/cypress_runner.js:2430:12)\n    at _drainQueue (http://localhost:5000/__cypress/runner/cypress_runner.js:2423:9)\n    at Async._drainQueues (http://localhost:5000/__cypress/runner/cypress_runner.js:2439:5)\n    at Async.drainQueues (http://localhost:5000/__cypress/runner/cypress_runner.js:2309:14)\nFrom Your Spec Code:\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:30:7)",
+                "diff": null
+              },
+              "uuid": "6e98b3d7-5a41-4f4b-a895-902e00cb8cd4",
+              "parentUUID": "4f0f4de7-a498-4210-a4bd-4ae3dc6c2778",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should submit resignation for an employee",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should submit resignation for an employee",
+              "timedOut": null,
+              "duration": 538,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const token = Cypress.env(\"employeeAuthToken\");\ncy.request({\n  method: \"POST\",\n  url: `${apiUrl}/user/resign`,\n  headers: {\n    Authorization: `Bearer ${token}` // <— MUST be “Bearer <token>”\n  },\n  body: {\n    lwd: \"2024-12-26\" // any valid date string\n  },\n  failOnStatusCode: false // in case it returns 401 or 400\n}).then(response => {\n  // Expect status 200 & a resignation ID\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.nested.property(\"data.resignation._id\");\n  employeeResignationId = response.body.data.resignation._id;\n});",
+              "err": {
+                "message": "AssertionError: expected 401 to equal 200",
+                "estack": "AssertionError: expected 401 to equal 200\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:57:33)",
+                "diff": "- 401\n+ 200\n"
+              },
+              "uuid": "c8bdccbc-693f-46b3-9853-4c74609708ad",
+              "parentUUID": "4f0f4de7-a498-4210-a4bd-4ae3dc6c2778",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should login as admin (HR)",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should login as admin (HR)",
+              "timedOut": null,
+              "duration": 1655,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// The deployed backend now expects { email, password } for login.\n// We assume the HR/admin user was created with email \"admin@example.com\" and password \"admin\".\ncy.request(\"POST\", `${apiUrl}/auth/login`, {\n  email: \"admin@example.com\",\n  // <— must match your deployed admin’s email\n  password: \"admin\"\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body).to.have.property(\"token\");\n  Cypress.env(\"adminAuthToken\", response.body.token);\n});",
+              "err": {},
+              "uuid": "92d160a8-e7ba-41a1-9715-33d45eacd3a0",
+              "parentUUID": "4f0f4de7-a498-4210-a4bd-4ae3dc6c2778",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should view all resignations submitted by employees as admin",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should view all resignations submitted by employees as admin",
+              "timedOut": null,
+              "duration": 1006,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const token = Cypress.env(\"adminAuthToken\");\ncy.request({\n  method: \"GET\",\n  url: `${apiUrl}/admin/resignations`,\n  headers: {\n    Authorization: `Bearer ${token}`\n  },\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body.data).to.be.an(\"array\");\n  // Confirm that our earlier resignation _id is present\n  const found = response.body.data.some(r => r._id === employeeResignationId);\n  expect(found).to.be.true;\n});",
+              "err": {
+                "message": "AssertionError: expected false to be true",
+                "estack": "AssertionError: expected false to be true\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:95:26)",
+                "diff": null
+              },
+              "uuid": "fc9f7d4b-b453-43b4-8450-9757d5cf0f66",
+              "parentUUID": "4f0f4de7-a498-4210-a4bd-4ae3dc6c2778",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should approve the employee’s resignation as admin",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should approve the employee’s resignation as admin",
+              "timedOut": null,
+              "duration": 776,
+              "state": "failed",
+              "speed": null,
+              "pass": false,
+              "fail": true,
+              "pending": false,
+              "context": null,
+              "code": "const token = Cypress.env(\"adminAuthToken\");\ncy.request({\n  method: \"PUT\",\n  url: `${apiUrl}/admin/conclude_resignation`,\n  headers: {\n    Authorization: `Bearer ${token}`,\n    \"Content-Type\": \"application/json\"\n  },\n  body: {\n    resignationId: employeeResignationId,\n    approved: true,\n    lwd: \"26 Dec 2024\"\n  },\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body.data).to.have.property(\"status\", \"Approved\");\n});",
+              "err": {
+                "message": "AssertionError: expected 400 to equal 200",
+                "estack": "AssertionError: expected 400 to equal 200\n    at Context.eval (webpack://exitease/./cypress/integration/backend/backendTests.spec.js:116:33)",
+                "diff": "- 400\n+ 200\n"
+              },
+              "uuid": "6809a432-adf5-4380-9d7a-82cb1657b1ce",
+              "parentUUID": "4f0f4de7-a498-4210-a4bd-4ae3dc6c2778",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should allow the employee to submit responses to exit questionnaire",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should allow the employee to submit responses to exit questionnaire",
+              "timedOut": null,
+              "duration": 0,
+              "state": "pending",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": true,
+              "context": null,
+              "code": "const token = Cypress.env(\"employeeAuthToken\");\ncy.request({\n  method: \"POST\",\n  url: `${apiUrl}/user/responses`,\n  headers: {\n    Authorization: `Bearer ${token}`,\n    \"Content-Type\": \"application/json\"\n  },\n  body: {\n    resignationId: employeeResignationId,\n    responses: [{\n      questionText: \"What prompted you to start looking for another job?\",\n      response: \"Lack of career growth opportunities\"\n    }, {\n      questionText: \"Would you recommend this company to others?\",\n      response: \"Yes, with some reservations\"\n    }]\n  },\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body.data).to.have.property(\"resignationId\", employeeResignationId);\n});",
+              "err": {},
+              "uuid": "9a968e23-d2aa-4fa7-a33e-d25cf78afd85",
+              "parentUUID": "4f0f4de7-a498-4210-a4bd-4ae3dc6c2778",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "should allow the admin to view all questionnaire responses",
+              "fullTitle": "Backend API Tests for Employee and Admin Role should allow the admin to view all questionnaire responses",
+              "timedOut": null,
+              "duration": 0,
+              "state": "pending",
+              "speed": null,
+              "pass": false,
+              "fail": false,
+              "pending": true,
+              "context": null,
+              "code": "const token = Cypress.env(\"adminAuthToken\");\ncy.request({\n  method: \"GET\",\n  url: `${apiUrl}/admin/exit_responses`,\n  headers: {\n    Authorization: `Bearer ${token}`\n  },\n  failOnStatusCode: false\n}).then(response => {\n  expect(response.status).to.eq(200);\n  expect(response.body.data).to.be.an(\"array\");\n  // Check that an entry matches our resignationId and expected responses:\n  const expected = [{\n    questionText: \"What prompted you to start looking for another job?\",\n    response: \"Lack of career growth opportunities\"\n  }, {\n    questionText: \"Would you recommend this company to others?\",\n    response: \"Yes, with some reservations\"\n  }];\n  const found = response.body.data.some(item => {\n    if (item.resignationId !== employeeResignationId) return false;\n    return Array.isArray(item.responses) && item.responses.length === expected.length && item.responses.every((resp, i) => {\n      return resp.questionText === expected[i].questionText && resp.response === expected[i].response;\n    });\n  });\n  expect(found).to.be.true;\n});",
+              "err": {},
+              "uuid": "8b6381e0-7384-4244-9f40-16157f69d81d",
+              "parentUUID": "4f0f4de7-a498-4210-a4bd-4ae3dc6c2778",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "92d160a8-e7ba-41a1-9715-33d45eacd3a0"
+          ],
+          "failures": [
+            "767a9d9f-1cb6-4699-9c3b-feb03614e6bb",
+            "6e98b3d7-5a41-4f4b-a895-902e00cb8cd4",
+            "c8bdccbc-693f-46b3-9853-4c74609708ad",
+            "fc9f7d4b-b453-43b4-8450-9757d5cf0f66",
+            "6809a432-adf5-4380-9d7a-82cb1657b1ce"
+          ],
+          "pending": [
+            "9a968e23-d2aa-4fa7-a33e-d25cf78afd85",
+            "8b6381e0-7384-4244-9f40-16157f69d81d"
+          ],
+          "skipped": [],
+          "duration": 54538,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "my-report",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "charts": true,
+        "json": true,
+        "reportsDir": "reports/your-reports-folder",
+        "reportFilename": "my-report",
+        "overwrite": false
+      },
+      "version": "6.2.0"
+    }
+  }
+}
