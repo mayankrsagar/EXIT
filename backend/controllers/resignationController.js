@@ -9,14 +9,13 @@ import User from '../models/User.js';
 // @route   POST /api/user/resign
 // @access  Private (employee)
 export const submitResignation = asyncHandler(async (req, res) => {
-  // Now we read `intendedLastWorkingDay` from the request body
-  const { intendedLastWorkingDay } = req.body;
-  if (!intendedLastWorkingDay) {
+  const { intendedLastWorkingDay, reason } = req.body;
+
+  if (!intendedLastWorkingDay || !reason) {
     res.status(400);
-    throw new Error("intendedLastWorkingDay is required");
+    throw new Error("intendedLastWorkingDay and reason are required");
   }
 
-  // Look up the authenticated user
   const userId = req.user.id;
   const user = await User.findById(userId);
   if (!user) {
@@ -24,16 +23,15 @@ export const submitResignation = asyncHandler(async (req, res) => {
     throw new Error("User not found");
   }
 
-  // Create a new Resignation document
   const resignation = await Resignation.create({
-    user: userId,
-    lastWorkingDay: new Date(intendedLastWorkingDay),
-    status: "Pending",
-    // …any other fields you need…
+    employee: userId, // ✅ matches schema
+    intendedLastWorkingDay: new Date(intendedLastWorkingDay), // ✅ matches schema
+    reason, // ✅ optional but useful
+    status: "Pending", // or default in schema
   });
 
-  return res.status(200).json({
-    data: { resignation },
+  return res.status(201).json({
+    data: resignation,
     message: "Resignation submitted successfully",
   });
 });
