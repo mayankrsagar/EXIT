@@ -31,10 +31,74 @@ describe("Backend API Tests for Employee and Admin Role", () => {
     }).then((response) => {
       logIfBadStatus(response, 201);
       expect(response.status).to.eq(201);
-      expect(response.body).to.have.property(
-        "message",
-        "User registered successfully"
+      expect(response.body).to.have.property('message', 'User registered successfully');
+    });
+  });
+
+  it('should login the employee with valid credentials', () => {
+    cy.request({
+      method: 'POST',
+      url: `${baseUrl}/api/auth/login`,
+      body: {
+        username: employeeUsername,
+        password: 'password123'
+      }
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property('token');
+      employeeToken = response.body.token;
+    });
+  });
+
+  it('should submit resignation for an employee', () => {
+    cy.request({
+      method: 'POST',
+      url: `${baseUrl}/api/user/resign`,
+      headers: {
+        Authorization: employeeToken
+      },
+      body: {
+        intendedLastWorkingDay: "2024-12-26"
+      }
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.data).to.have.property('resignation');
+      expect(response.body.data.resignation).to.have.property('_id');
+      resignationId = response.body.data.resignation._id;
+    });
+  });
+
+  it('should login as admin (HR)', () => {
+    cy.request({
+      method: 'POST',
+      url: `${baseUrl}/api/auth/login`,
+      body: {
+        username: 'admin',
+        password: 'admin'
+      }
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body).to.have.property('token');
+      adminToken = response.body.token;
+    });
+  });
+
+  it('should view all resignations submitted by employees as admin', () => {
+    cy.request({
+      method: 'GET',
+      url: `${baseUrl}/api/admin/resignations`,
+      headers: {
+        Authorization: adminToken
+      }
+    }).then((response) => {
+      expect(response.status).to.eq(200);
+      expect(response.body.data).to.be.an('array');
+      
+      // Verify our test resignation is in the list
+      const testResignation = response.body.data.find(
+        r => r._id === resignationId
       );
+      expect(testResignation).to.exist;
     });
   });
 
