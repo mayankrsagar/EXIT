@@ -1,6 +1,6 @@
 describe("Backend API Tests for Employee and Admin Role", () => {
-  const apiUrl = "https://exit-kxgu.onrender.com/api";
-  // const apiUrl="http://localhost:5000/api"
+  // const apiUrl = "https://exit-kxgu.onrender.com/api";
+  const apiUrl="http://localhost:5000/api";
   let employeeResignationId = null;
 
   // (1) Generate a unique alphanumeric username + email + ≥6‐char password
@@ -35,74 +35,72 @@ describe("Backend API Tests for Employee and Admin Role", () => {
     });
   });
 
-  it('should login the employee with valid credentials', () => {
-    cy.request({
-      method: 'POST',
-      url: `${baseUrl}/api/auth/login`,
-      body: {
-        username: employeeUsername,
-        password: 'password123'
-      }
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body).to.have.property('token');
-      employeeToken = response.body.token;
-    });
-  });
+  //   cy.request({
+  //     method: 'POST',
+  //     url: `${baseUrl}/api/auth/login`,
+  //     body: {
+  //       username: employeeUsername,
+  //       password: 'password123'
+  //     }
+  //   }).then((response) => {
+  //     expect(response.status).to.eq(200);
+  //     expect(response.body).to.have.property('token');
+  //     employeeToken = response.body.token;
+  //   });
+  // });
 
-  it('should submit resignation for an employee', () => {
-    cy.request({
-      method: 'POST',
-      url: `${baseUrl}/api/user/resign`,
-      headers: {
-        Authorization: employeeToken
-      },
-      body: {
-        intendedLastWorkingDay: "2024-12-26"
-      }
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body.data).to.have.property('resignation');
-      expect(response.body.data.resignation).to.have.property('_id');
-      resignationId = response.body.data.resignation._id;
-    });
-  });
+  // it('should submit resignation for an employee', () => {
+  //   cy.request({
+  //     method: 'POST',
+  //     url: `${baseUrl}/api/user/resign`,
+  //     headers: {
+  //       Authorization: employeeToken
+  //     },
+  //     body: {
+  //       intendedLastWorkingDay: "2024-12-26"
+  //     }
+  //   }).then((response) => {
+  //     expect(response.status).to.eq(200);
+  //     expect(response.body.data).to.have.property('resignation');
+  //     expect(response.body.data.resignation).to.have.property('_id');
+  //     resignationId = response.body.data.resignation._id;
+  //   });
+  // });
 
-  it('should login as admin (HR)', () => {
-    cy.request({
-      method: 'POST',
-      url: `${baseUrl}/api/auth/login`,
-      body: {
-        username: 'admin',
-        password: 'admin'
-      }
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body).to.have.property('token');
-      adminToken = response.body.token;
-    });
-  });
+  // it('should login as admin (HR)', () => {
+  //   cy.request({
+  //     method: 'POST',
+  //     url: `${baseUrl}/api/auth/login`,
+  //     body: {
+  //       username: 'admin',
+  //       password: 'admin'
+  //     }
+  //   }).then((response) => {
+  //     expect(response.status).to.eq(200);
+  //     expect(response.body).to.have.property('token');
+  //     adminToken = response.body.token;
+  //   });
+  // });
 
-  it('should view all resignations submitted by employees as admin', () => {
-    cy.request({
-      method: 'GET',
-      url: `${baseUrl}/api/admin/resignations`,
-      headers: {
-        Authorization: adminToken
-      }
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body.data).to.be.an('array');
+  // it('should view all resignations submitted by employees as admin', () => {
+  //   cy.request({
+  //     method: 'GET',
+  //     url: `${baseUrl}/api/admin/resignations`,
+  //     headers: {
+  //       Authorization: adminToken
+  //     }
+  //   }).then((response) => {
+  //     expect(response.status).to.eq(200);
+  //     expect(response.body.data).to.be.an('array');
       
-      // Verify our test resignation is in the list
-      const testResignation = response.body.data.find(
-        r => r._id === resignationId
-      );
-      expect(testResignation).to.exist;
-    });
-  });
+  //     // Verify our test resignation is in the list
+  //     const testResignation = response.body.data.find(
+  //       r => r._id === resignationId
+  //     );
+  //     expect(testResignation).to.exist;
+  //   });
+  // });
 
-<<<<<<< HEAD
   // 2) Login the employee (email + password)
   it("should login the employee with valid credentials", () => {
     cy.request("POST", `${apiUrl}/auth/login`, {
@@ -203,24 +201,9 @@ describe("Backend API Tests for Employee and Admin Role", () => {
         exitDate:               "2028-10-11T00:00:00.000Z",
       },
       failOnStatusCode: false,
-=======
-  it('should approve the employee’s resignation as admin', () => {
-    cy.request({
-      method: 'PUT',
-      url: `${baseUrl}/api/admin/conclude_resignation`,
-      headers: {
-        Authorization: adminToken
-      },
-      body: {
-        resignationId: resignationId,
-        approved: true,
-        lwd: "2024-12-26"
-      }
->>>>>>> 54537d24d0f499b08fc74e5e10f5152ad5b919dd
     }).then((response) => {
       logIfBadStatus(response, 200);
       expect(response.status).to.eq(200);
-<<<<<<< HEAD
       expect(response.body.data).to.have.property("status", "Approved");
 
       // Re‐store it in case anything overwrote it (not strictly required,
@@ -244,25 +227,12 @@ describe("Backend API Tests for Employee and Admin Role", () => {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "application/json",
-=======
-      expect(response.body.data).to.have.property('status', 'Approved');
-    });
-  });
-
-  it('should allow the employee to submit responses to exit questionnaire', () => {
-    cy.request({
-      method: 'POST',
-      url: `${baseUrl}/api/user/responses`,
-      headers: {
-        Authorization: employeeToken
->>>>>>> 54537d24d0f499b08fc74e5e10f5152ad5b919dd
       },
       body: {
         resignationId,
         responses: [
           {
             questionText: "What prompted you to start looking for another job?",
-<<<<<<< HEAD
             response:     "Lack of career growth opportunities",
           },
           {
@@ -301,33 +271,9 @@ describe("Backend API Tests for Employee and Admin Role", () => {
         Authorization: `Bearer ${token}`,
       },
       failOnStatusCode: false,
-=======
-            response: "Lack of career growth opportunities"
-          },
-          {
-            questionText: "Would you recommend this company to others?",
-            response: "Yes, with some reservations"
-          }
-        ]
-      }
-    }).then((response) => {
-      expect(response.status).to.eq(200);
-      expect(response.body).to.have.property('message', 'Exit interview submitted');
-    });
-  });
-
-  it('should allow the admin to view all questionnaire responses', () => {
-    cy.request({
-      method: 'GET',
-      url: `${baseUrl}/api/admin/exit_responses`,
-      headers: {
-        Authorization: adminToken
-      }
->>>>>>> 54537d24d0f499b08fc74e5e10f5152ad5b919dd
     }).then((response) => {
       logIfBadStatus(response, 200);
       expect(response.status).to.eq(200);
-<<<<<<< HEAD
       expect(response.body.data).to.be.an("array");
 
       // Find the entry whose `.resignation` matches our ID:
@@ -345,12 +291,4 @@ describe("Backend API Tests for Employee and Admin Role", () => {
     });
   });
 });
-
-=======
-      expect(response.body.data).to.be.an('array');
-      expect(response.body.data[0]).to.have.property('employeeId');
-      expect(response.body.data[0]).to.have.property('responses').that.is.an('array');
-    });
-  });
-});
->>>>>>> 54537d24d0f499b08fc74e5e10f5152ad5b919dd
+  

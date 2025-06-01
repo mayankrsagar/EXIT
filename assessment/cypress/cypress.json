@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://exit-kxgu.onrender.com",
+  "baseUrl": "http://localhost:5000",
   "video": false,
   "integrationFolder": "cypress/integration"
 }
