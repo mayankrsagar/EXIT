@@ -98,9 +98,10 @@ it("should submit resignation for an employee", () => {
       exitDate:               null,
       decidedAt:              null,
     });
+  const newId = response.body.data._id;
+    employeeResignationId = newId;
 
-    // Store for the next tests
-    employeeResignationId = response.body.data._id;
+     Cypress.env("employeeResignationId", newId);
   });
 });
 
@@ -172,7 +173,7 @@ it("should submit resignation for an employee", () => {
     // Now assert that server returns 200 OK
     logIfBadStatus(response, 200);
     expect(response.status).to.eq(200);
-
+Cypress.env("employeeResignationId", response.body.data._id);
     // Finally check that “status” has been updated to “Approved”:
     expect(response.body.data).to.have.property("status", "Approved");
   });
