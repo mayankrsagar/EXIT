@@ -1,3 +1,22 @@
+// Support file or test setup step
+function waitUntilBackendIsReady() {
+  const apiUrl = "https://exit-kxgu.onrender.com/api"; // or baseUrl
+  cy.log("🔄 Waiting for backend to be ready...");
+
+  // Try hitting a known endpoint until it responds 2xx or 4xx (meaning the server is up)
+  cy.request({
+    method: "GET",
+    url: `${apiUrl}/auth/login`,
+    failOnStatusCode: false, // 400/401/422 is okay — we only care if server is responding
+    retryOnStatusCodeFailure: true,
+    timeout: 15000, // wait up to 15 seconds
+  }).then((res) => {
+    expect([200, 400, 401, 422]).to.include(res.status);
+  });
+}
+
+
+
 describe("Backend API Tests for Employee and Admin Role", () => {
   const apiUrl = "https://exit-kxgu.onrender.com/api";
   // const apiUrl="http://localhost:5000/api"
@@ -24,6 +43,7 @@ describe("Backend API Tests for Employee and Admin Role", () => {
 
   // 1) Register a new employee
   it("should register a new employee", () => {
+    waitUntilBackendIsReady(); // 🔄 wait for server to fully boot
     cy.request("POST", `${apiUrl}/auth/register`, {
       username: employeeUsername,
       email:    employeeEmail,
