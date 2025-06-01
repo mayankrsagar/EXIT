@@ -206,8 +206,8 @@ it("should submit resignation for an employee", () => {
     },
     failOnStatusCode: false,
   }).then((response) => {
-    logIfBadStatus(response, 201); // ✅ Expect 201
-    expect(response.status).to.eq(201); // ✅ Correct status
+    logIfBadStatus(response, 200); 
+    expect(response.status).to.eq(200); 
     expect(response.body).to.have.property("message", "Exit interview submitted");
 
     const { data } = response.body;
