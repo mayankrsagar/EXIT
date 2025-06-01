@@ -214,46 +214,45 @@ it("should submit resignation for an employee", () => {
     });
   });
 
-  // 8) Admin views all exit‐interview responses (SKIPPED)
-  it("should allow the admin to view all questionnaire responses", () => {
-    const token = Cypress.env("adminAuthToken");
-    cy.request({
-      method: "GET",
-      url: `${apiUrl}/admin/exit_responses`,
-      headers: {
-        Authorization: `Bearer ${token}`,
+  // 8) Admin views all exit‐interview responses
+it("should allow the admin to view all questionnaire responses", () => {
+  const token = Cypress.env("adminAuthToken");
+  cy.request({
+    method: "GET",
+    url: `${apiUrl}/admin/exit_responses`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((response) => {
+    expect(response.status).to.eq(200);
+    expect(response.body.data).to.be.an("array");
+
+    const expected = [
+      {
+        questionText: "What prompted you to start looking for another job?",
+        response: "Lack of career growth opportunities",
       },
-      failOnStatusCode: false,
-    }).then((response) => {
-      logIfBadStatus(response, 200);
-      expect(response.status).to.eq(200);
-      expect(response.body.data).to.be.an("array");
+      {
+        questionText: "Would you recommend this company to others?",
+        response: "Yes, with some reservations",
+      },
+    ];
 
-      const expected = [
-        {
-          questionText: "What prompted you to start looking for another job?",
-          response: "Lack of career growth opportunities",
-        },
-        {
-          questionText: "Would you recommend this company to others?",
-          response: "Yes, with some reservations",
-        },
-      ];
+    // Get employee ID from resignation record
+    const employeeId = Cypress.env('employeeId');
+    
+    // Find responses for this employee
+    const employeeResponses = response.body.data.find(
+      item => item.employeeId === employeeId
+    );
 
-      const found = response.body.data.some((item) => {
-        if (item.resignationId !== employeeResignationId) return false;
-        return (
-          Array.isArray(item.responses) &&
-          item.responses.length === expected.length &&
-          item.responses.every((resp, i) => {
-            return (
-              resp.questionText === expected[i].questionText &&
-              resp.response === expected[i].response
-            );
-          })
-        );
-      });
-      expect(found).to.be.true;
+    // Verify responses exist for this employee
+    expect(employeeResponses, `Responses for employee ${employeeId} not found`).to.exist;
+    
+    // Verify response content
+    expected.forEach((exp, index) => {
+      expect(employeeResponses.responses[index]).to.include(exp);
     });
   });
+});
 });

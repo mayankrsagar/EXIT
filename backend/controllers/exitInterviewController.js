@@ -13,7 +13,6 @@ export const submitExitInterview = async (req, res, next) => {
 
     const { resignationId, responses } = value;
 
-    // Only Employees whose resignation is approved can submit
     if (req.user.role !== 'EMPLOYEE') {
       return res.status(403).json({ error: 'Only employees can submit exit interviews' });
     }
@@ -23,11 +22,16 @@ export const submitExitInterview = async (req, res, next) => {
       employeeId: req.user.id,
       responses,
     });
-    return res.status(201).json({ data: newExitInterview });
+
+    return res.status(201).json({ 
+      message: "Exit interview submitted", 
+      data: newExitInterview  // Include the saved document here!
+    });
   } catch (err) {
     next(err);
   }
 };
+
 
 export const getAllExitInterviews = async (req, res, next) => {
   try {
