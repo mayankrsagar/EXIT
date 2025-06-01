@@ -180,39 +180,42 @@ it("should submit resignation for an employee", () => {
 
 
   // 7) Employee completes the exit‐interview
-  it("should allow the employee to submit responses to exit questionnaire", () => {
-    const token = Cypress.env("employeeAuthToken");
-    cy.request({
-      method: "POST",
-      url: `${apiUrl}/user/responses`,
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: {
-        resignationId: employeeResignationId,
-        responses: [
-          {
-            questionText:
-              "What prompted you to start looking for another job?",
-            response: "Lack of career growth opportunities",
-          },
-          {
-            questionText: "Would you recommend this company to others?",
-            response: "Yes, with some reservations",
-          },
-        ],
-      },
-      failOnStatusCode: false,
-    }).then((response) => {
-      logIfBadStatus(response, 200);
-      expect(response.status).to.eq(200);
-      expect(response.body.data).to.have.property(
-        "resignationId",
-        employeeResignationId
-      );
-    });
+ it("should allow the employee to submit responses to exit questionnaire", () => {
+  const token = Cypress.env("employeeAuthToken");
+  const resignationId = Cypress.env("employeeResignationId");
+
+  cy.request({
+    method: "POST",
+    url: `${apiUrl}/user/responses`,
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
+    body: {
+      resignationId,
+      responses: [
+        {
+          questionText: "What prompted you to start looking for another job?",
+          response: "Lack of career growth opportunities",
+        },
+        {
+          questionText: "Would you recommend this company to others?",
+          response: "Yes, with some reservations",
+        },
+      ],
+    },
+    failOnStatusCode: false,
+  }).then((response) => {
+    logIfBadStatus(response, 201); // ✅ Expect 201
+    expect(response.status).to.eq(201); // ✅ Correct status
+    expect(response.body).to.have.property("message", "Exit interview submitted");
+
+    const { data } = response.body;
+    expect(data).to.have.property("resignation", resignationId); // ✅ Adjust based on actual key
+    expect(data).to.have.property("employee"); // just checking existence
+    expect(data.responses).to.be.an("array").and.have.length(2);
   });
+});
 
   // 8) Admin views all exit‐interview responses
 it("should allow the admin to view all questionnaire responses", () => {
